@@ -45,7 +45,7 @@ th {
     margin-top: 30px;
 }
 
-#form p {
+#form h2 {
     font-size: 1.4em;
     text-align: left;
     margin: 0;
@@ -87,9 +87,29 @@ button:hover {
 }
 
 table tr:nth-child(odd){
-    background-color:rgb(252, 235, 216);
+    background-color:rgb(216, 229, 252);
   }
 
-  table tr:nth-child(even){
-    background-color:rgb(255, 248, 241);
-  }
+table tr:nth-child(even){
+    background-color:rgb(240, 246, 255);
+}
+
+.fa-check-circle {
+      color: green;
+}
+
+.fa-check-circle:hover {
+    cursor:not-allowed;
+}
+
+.fa-times-circle {
+      color:red;
+}
+
+#error {
+    color:red;
+    text-align: left;
+    font-size: 1em;
+    font-weight: 800;
+    margin-top: 0;
+}

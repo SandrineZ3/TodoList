@@ -61,17 +61,15 @@ if (isset($_GET['updateState_task'])) {
 	<div id="container">
 		<h1>Todo-List en PHP</h1>
 		<form method="post" action="index.php" id="form">
-
-			<!-- Si le formulaire est vide, on affiche l'erreur -->
-			<?php if (isset($errors)) { ?>
-				<p><?php echo $errors; ?></p>
-			<?php } ?>
-
-			<p>Ajouter une nouvelle tâche :</p>
+			<h2>Ajouter une nouvelle tâche :</h2>
 			<div id="inputArea">
-				<input type="text" name="task" id="inputText" size="40">
+				<input type="text" name="task" id="inputText" size="40" maxlength="45">
 				<button type="submit" name="submit" id="addTask">Ajouter !</button>
 			</div>
+			<!-- Si le formulaire est vide, on affiche l'erreur -->
+			<?php if (isset($errors)) { ?>
+				<p id="error"><?php echo $errors; ?></p>
+			<?php } ?>
 		</form>
 		<!-- Tableau qui affiche toutes les tâches enregistrées en BDD -->
 		<table>
@@ -88,15 +86,21 @@ if (isset($_GET['updateState_task'])) {
 				$showTasks = "SELECT * FROM tasks";
 				$result = $mysqli->query($showTasks);
 
-				// Indique quel type de tableau sera retourné (num + string)
+				// On boucle sur les résultats récupérés par SELECT
+				// MYSQLI_BOTH indique quel type de tableau sera retourné (num + string)
 				while ($row = $result->fetch_array(MYSQLI_BOTH)) { ?>
 					<tr>
-						<!-- TODO : Faire les statuts en JS ??? -->
+
 						<!-- Bouton "en cours / OK" -->
 						<td class="actionButton">
 							<a href="index.php?updateState_task=<?php echo $row['id'] ?>">
-								<i class="fas fa-check-circle"></i>
-								<i class="fas fa-times-circle"></i>
+								<?php
+								if ($row['is_done']) {
+									echo "<i class='fas fa-check-circle'></i>";
+								} else {
+									echo "<i class='fas fa-times-circle'></i>";
+								}
+								?>
 							</a>
 						</td>
 
@@ -105,14 +109,14 @@ if (isset($_GET['updateState_task'])) {
 
 						<!-- Bouton "supprimer" -->
 						<td class="actionButton">
-							<a href="index.php?del_task=<?php echo $row['id'] ?>">
+							<a href="index.php?del_task=<?php echo $row['id'] ?>" title="Supprimer la tâche">
 								<i class="fas fa-trash-alt"></i>
 							</a>
 
 							<!-- TODO : Faire la fonctionnalité "modifier" -->
-						<!-- Bouton "modifier" -->
-						<i class="fas fa-edit"></i>
-						
+							<!-- Bouton "modifier" -->
+							<i class="fas fa-edit"></i>
+
 						</td>
 					</tr>
 				<?php } ?>
