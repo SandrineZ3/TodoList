@@ -1,46 +1,6 @@
-<?php
-// Initialise la variable $errors
-$errors = "";
+<?php require_once './db_cnx.php'; ?>
 
-// Connexion à la BDD
-$mysqli = new mysqli("localhost", "root", "", "todolistdb");
-
-// Vérifie la connexion
-if ($mysqli->connect_errno) {
-	echo "Impossible de se connecter à MySQL: " . $mysqli->connect_error;
-	exit();
-}
-
-// Ajoute des quotes à la tâche ajoutée -> Sécurité contre faille XSS
-if (isset($_POST['submit'])) {
-	if (empty($_POST['task'])) {
-		$errors = "Ce champ ne peut pas être vide !";
-	} else {
-		$task = $_POST['task'];
-		$addTask = "INSERT INTO tasks (task) VALUES ('$task')";
-		$mysqli->query($addTask);
-		header('location: index.php');
-	}
-}
-
-// Supprime les tâches
-if (isset($_GET['del_task'])) {
-	$id = $_GET['del_task'];
-
-	$deleteTask = "DELETE FROM tasks WHERE id=" . $id;
-	$mysqli->query($deleteTask);
-	header('location: index.php');
-}
-
-// en cours / ok
-if (isset($_GET['updateState_task'])) {
-	$id = $_GET['updateState_task'];
-
-	$updateStateTask = "UPDATE tasks SET is_done = '1' WHERE id=" . $id;
-	$mysqli->query($updateStateTask);
-	header('location: index.php');
-}
-?>
+<?php require './queries.php'; ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -54,12 +14,14 @@ if (isset($_GET['updateState_task'])) {
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-	<title>Todo-List en PHP</title>
+	<title>Todo-List simple en PHP</title>
 </head>
 
 <body>
 	<div id="container">
+
 		<h1>Todo-List en PHP</h1>
+
 		<form method="post" action="index.php" id="form">
 			<h2>Ajouter une nouvelle tâche :</h2>
 			<div id="inputArea">
@@ -71,13 +33,14 @@ if (isset($_GET['updateState_task'])) {
 				<p id="error"><?php echo $errors; ?></p>
 			<?php } ?>
 		</form>
+
 		<!-- Tableau qui affiche toutes les tâches enregistrées en BDD -->
 		<table>
 			<thead>
 				<tr>
 					<th>Statut</th>
 					<th>Tâches</th>
-					<th>Actions</th>
+					<th>Supprimer</th>
 				</tr>
 			</thead>
 
@@ -85,13 +48,12 @@ if (isset($_GET['updateState_task'])) {
 				<?php
 				$showTasks = "SELECT * FROM tasks";
 				$result = $mysqli->query($showTasks);
-
 				// On boucle sur les résultats récupérés par SELECT
 				// MYSQLI_BOTH indique quel type de tableau sera retourné (num + string)
 				while ($row = $result->fetch_array(MYSQLI_BOTH)) { ?>
 					<tr>
 
-						<!-- Bouton "en cours / OK" -->
+						<!-- Bouton unidirectionnel "en cours" / "OK" -->
 						<td class="actionButton">
 							<a href="index.php?updateState_task=<?php echo $row['id'] ?>">
 								<?php
@@ -105,23 +67,20 @@ if (isset($_GET['updateState_task'])) {
 						</td>
 
 						<!-- Libellé de la tâche -->
-						<td class="tasks"> <?php echo $row['task']; ?> </td>
+						<td class="tasks"> 
+							<?php echo $row['task']; ?> 
+						</td>
 
 						<!-- Bouton "supprimer" -->
 						<td class="actionButton">
-							<a href="index.php?del_task=<?php echo $row['id'] ?>" title="Supprimer la tâche">
+							<a href="index.php?delete_task=<?php echo $row['id'] ?>" title="Supprimer la tâche">
 								<i class="fas fa-trash-alt"></i>
 							</a>
-
-							<!-- TODO : Faire la fonctionnalité "modifier" -->
-							<!-- Bouton "modifier" -->
-							<i class="fas fa-edit"></i>
-
 						</td>
 					</tr>
+				<!-- Fermeture de la boucle -->
 				<?php } ?>
 			</tbody>
 		</table>
 </body>
-
 </html>
