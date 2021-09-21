@@ -1,6 +1,6 @@
-# Todo-List
+# Todo-List - projet personnel
 
-### :clipboard: _Todo-list réalisée en PHP et MySQL_
+### :clipboard: _Todo-list réalisée en PHP (avec l'extension MySQLi en orienté objet) et MySQL_
 
 <br>
 
@@ -18,9 +18,6 @@
 <a href="https://www.mysql.com/fr/">
   <img alt="mysql" src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/62/MySQL.svg/langfr-220px-MySQL.svg.png" width="100">
 </a>&nbsp;&nbsp;
-<a href="https://balsamiq.com/">
-  <img alt="balsamiqMockups" src="https://blog.balsamiq.com/wp-content/uploads/2017/09/Balsamiq-Wireframes-Thumbnail-Final-0.png" width="90">
-</a>&nbsp;&nbsp;
 <a href="https://code.visualstudio.com/">
   <img alt="vscode" src="https://devstickers.com/assets/img/pro/saxu.png" width="60"> 
 </a>
@@ -28,4 +25,11 @@
 <br>
 <br>
 
-### :page_with_curl: Pour utiliser l'application :
+### :page_with_curl: Fonctionnalités de l'application :
+* Ajouter des tâches à réaliser
+* Modifier le statut des tâches : les passer de "en cours" à "ok"
+* Supprimer les tâches 
+
+<br>
+
+### :video_game: Pour utiliser l'application :
