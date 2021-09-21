@@ -33,3 +33,10 @@
 <br>
 
 ### :video_game: Pour utiliser l'application :
+
+Pour fonctionner, cette application nécessite <b>WampServer</b> (télécharger <a href="https://www.wampserver.com/"> ici </a>).
+
+* Télécharger le projet, l'extraire et le coller dans _C:/wamp64/www_
+* Ouvrir le navigateur à l'adresse _localhost/phpmyadmin/_
+* Importer la base de données locale grâce au fichier _todolistdb.sql_ fourni dans mon projet
+* Ouvrir le navigateur à l'adresse _localhost/TodoList-main_ pour tester l'application
